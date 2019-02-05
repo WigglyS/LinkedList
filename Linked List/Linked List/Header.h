@@ -20,7 +20,7 @@ private:
 	Node<T>* Head = nullptr;
 	Node<T>* Tail = nullptr;
 public:
-	void Add(T data)
+	void Insert(T data)
 	{
 		if (Head == nullptr && Tail == nullptr)
 		{
@@ -47,6 +47,31 @@ public:
 		Destroy(*Tail);
 		Tail = newEnd;
 	}
+	void Delete(Node* N)
+	{
+		if(Head == N)
+		{
+			Head = N->Next;
+			N->Next->Previous = NULL;
+			N->Next = NULL;
+			delete N;
+		}
+		else if(Tail == N)
+		{
+			Tail= N->Previous;
+			N->Previous->Next = NULL;
+			N->Previous = NULL;
+			delete N;
+		}
+		else
+		{
+			N->Previous->Next = N->Next;
+			N->Next->Previous = N->Previous;
+			N->Next = NULL;
+			N->Previous = NULL;
+			delete N;
+		}
+	}
 	void Insert(T data, int position)
 	{
 		
@@ -55,10 +80,22 @@ public:
 	{
 		
 	}
-	//Node* Find(T data)
-	//{
-	//	//return // find the pointer to the node with the value
-	//}
+	Node* Find(T data)
+	{
+		Node* temp = Head;
+		while(temp != NULL)
+		{
+			if(temp->data == data)
+			{
+				return temp;
+			}
+			else
+			{
+				temp = temp->Next;
+			}
+		}
+		return NULL;// find the pointer to the node with the value
+	}
 
 
 };
