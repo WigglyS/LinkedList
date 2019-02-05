@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <iostream>
 
 using namespace std;
 
@@ -72,14 +73,6 @@ public:
 			delete N;
 		}
 	}
-	void Insert(T data, int position)
-	{
-		
-	}
-	void RemoveFrom(int position)
-	{
-		
-	}
 	Node* Find(T data)
 	{
 		Node* temp = Head;
@@ -94,8 +87,7 @@ public:
 				temp = temp->Next;
 			}
 		}
-		return NULL;// find the pointer to the node with the value
+		return NULL;
 	}
-
 
 };
