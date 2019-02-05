@@ -7,8 +7,8 @@ template<typename T>
 
 class Node
 {
+	
 	T data;
-
 	Node* Previous = nullptr;
 	Node* Next = nullptr;
 };
@@ -16,9 +16,10 @@ class Node
 template<typename T>
 class List
 {
+private:
 	Node<T>* Head = nullptr;
 	Node<T>* Tail = nullptr;
-
+public:
 	void Add(T data)
 	{
 		if (Head == nullptr && Tail == nullptr)
@@ -33,8 +34,9 @@ class List
 		{
 			Node<T> newNode = new Node<T>;
 			newNode.data = data;
+			newNode.Previous = Tail;
+			Tail->Next = newNode;
 			newNode.Next = NULL;
-			//newNode.Previous =
 			Tail = &newNode;
 		}
 
@@ -53,5 +55,10 @@ class List
 	{
 		
 	}
+	//Node* Find(T data)
+	//{
+	//	//return // find the pointer to the node with the value
+	//}
+
 
 };
