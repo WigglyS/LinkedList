@@ -24,20 +24,23 @@ void main()
 			cout << "Enter a Number to Add: ";
 			cin >> AddNum;
 			linkedList.Insert(AddNum);
-			linkedList.Display();
+			system("CLS");
 			break;
 		case 1:
 			int RemoveNum;
 			cout << "Enter a Number to Remove: ";
 			cin >> RemoveNum;
 			linkedList.Delete(RemoveNum);
-			linkedList.Display();
+			system("CLS");
 			break;
 		case 2:
+			system("CLS");
 			cout << "The list contains: "<< endl;
 			linkedList.Display();
 			break;
 		case 3:
+			system("CLS");
+			linkedList.Diagnostics();
 			break;
 		case 9:
 			Quit = 1;
