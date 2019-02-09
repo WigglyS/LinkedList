@@ -5,13 +5,16 @@
 using namespace std;
 
 template<typename T>
-
 class Node
 {
-	
-	T data;
+public:
 	Node* Previous = nullptr;
 	Node* Next = nullptr;
+
+	T Getdata() { return data; };
+	void SetData(T d) { data = d; };
+private:
+	T data;
 };
 
 template<typename T>
@@ -25,60 +28,66 @@ public:
 	{
 		if (Head == nullptr && Tail == nullptr)
 		{
-			Node<T> newNode = new Node<T>;
-			newNode.data = data;
-			newNode.Previous = NULL;
-			newNode.Next = NULL;
-			Head = &newNode;
-			Tail = &newNode;
+			Node<T>* newNode = new Node<T>;
+			newNode->SetData(data);
+			newNode->Previous = NULL;
+			newNode->Next = NULL;
+			Head = newNode;
+			Tail = newNode;
 		}else
 		{
-			Node<T> newNode = new Node<T>;
-			newNode.data = data;
-			newNode.Previous = Tail;
+			Node<T>* newNode = new Node<T>;
+			newNode->SetData(data);
+			newNode->Previous = Tail;
 			Tail->Next = newNode;
-			newNode.Next = NULL;
-			Tail = &newNode;
+			newNode->Next = NULL;
+			Tail = newNode;
 		}
 
 	}
-	void Remove()
+	
+	void Delete(Node<T>* N)
 	{
-		Node<T>* newEnd = Tail->Previous;
-		Destroy(*Tail);
-		Tail = newEnd;
-	}
-	void Delete(Node* N)
-	{
+		if (Tail != N && Head != N) {
+			N->Previous->Next = N->Next;
+			N->Next->Previous = N->Previous;
+		}
 		if(Head == N)
 		{
 			Head = N->Next;
-			N->Next->Previous = NULL;
-			N->Next = NULL;
-			delete N;
+			if (N->Next != NULL) {
+				N->Next->Previous = NULL;
+			}
 		}
-		else if(Tail == N)
+		if(Tail == N)
 		{
 			Tail= N->Previous;
-			N->Previous->Next = NULL;
-			N->Previous = NULL;
-			delete N;
+			if (N->Previous != NULL) {
+				N->Previous->Next = NULL;
+			}
+			
 		}
-		else
-		{
-			N->Previous->Next = N->Next;
-			N->Next->Previous = N->Previous;
 			N->Next = NULL;
 			N->Previous = NULL;
 			delete N;
+	}
+
+	void Delete(T data) {
+		Node<T>* FoundData = Find(data);
+		if (FoundData != NULL) {
+			Delete(FoundData);
+		}
+		else {
+			cout << "That data is not in the List" << endl;
 		}
 	}
-	Node* Find(T data)
+
+	Node<T>* Find(T data)
 	{
-		Node* temp = Head;
+		Node<T>* temp = Head;
 		while(temp != NULL)
 		{
-			if(temp->data == data)
+			if(temp->Getdata() == data)
 			{
 				return temp;
 			}
@@ -88,6 +97,16 @@ public:
 			}
 		}
 		return NULL;
+	}
+
+	void Display() {
+		Node<T>* temp = Head;
+		while (temp != NULL)
+		{
+			cout << temp ->Getdata() << " ";
+			temp = temp->Next;
+		}
+		cout << endl;
 	}
 
 };
