@@ -3,7 +3,7 @@
 
 void main()
 {
-	List<int> linkedList;
+	LinkedList<int> linkedList;
 
 	int Quit = 0;
 

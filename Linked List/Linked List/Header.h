@@ -22,7 +22,7 @@ private:
 
 //The list class is for holding acess to the head and tail as well as the funtions for adding deleting etc for the list
 template<typename T>
-class List
+class LinkedList
 {
 private:
 	Node<T>* Head = nullptr;
@@ -133,7 +133,7 @@ public:
 
 	// a test to see if the functions work properly will return false if it failed
 	bool Diagnostics() {
-		List<int> testList;
+		LinkedList<int> testList;
 
 
 		/// checking the inset function 
