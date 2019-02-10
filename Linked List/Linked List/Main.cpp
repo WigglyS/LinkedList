@@ -10,6 +10,7 @@ void main()
 	do {
 		
 		int input;
+		linkedList.Display();
 		cout << "Press (0) to Add Number to List" << endl;
 		cout << "Press (1) to Remove A Number From the list" << endl;
 		cout << "Press (2) to Display the List" << endl;
@@ -35,7 +36,6 @@ void main()
 			break;
 		case 2:
 			system("CLS");
-			cout << "The list contains: "<< endl;
 			linkedList.Display();
 			break;
 		case 3:

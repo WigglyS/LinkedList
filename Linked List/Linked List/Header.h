@@ -1,11 +1,12 @@
 #pragma once
 #include <string>
 #include <iostream>
+//this is for system("CLS");
 #include <stdlib.h>
 
 using namespace std;
 
-///  
+///  The Node class is to store data of a generic type and acess to the next and previous in the list
 template<typename T>
 class Node
 {
@@ -19,6 +20,7 @@ private:
 	T data;
 };
 
+//The list class is for holding acess to the head and tail as well as the funtions for adding deleting etc for the list
 template<typename T>
 class List
 {
@@ -26,9 +28,10 @@ private:
 	Node<T>* Head = nullptr;
 	Node<T>* Tail = nullptr;
 public:
-	/// 
+	/// This function inserts the data you pass it to the end of the list
 	void Insert(T data)
 	{
+		//this condition is for the first node created, the nodes pointers are set to null and the head and tail are set to it since its the only node
 		if (Head == nullptr && Tail == nullptr)
 		{
 			Node<T>* newNode = new Node<T>;
@@ -37,6 +40,8 @@ public:
 			newNode->Next = NULL;
 			Head = newNode;
 			Tail = newNode;
+
+		//all the other nodes are handled by this one, adds a new node rearanges the pointers of the previous node and the new one and moves the tail to the new node
 		}else
 		{
 			Node<T>* newNode = new Node<T>;
@@ -49,13 +54,16 @@ public:
 
 	}
 	
-	///
+	///Deletes the node of which you give the pointer to
 	void Delete(Node<T>* N)
 	{
+		//this first one is the general case, moves the pointers on both sides of the node to be deleted
 		if (Tail != N && Head != N) {
 			N->Previous->Next = N->Next;
 			N->Next->Previous = N->Previous;
 		}
+		//these next 2 handle it if it  either the head or tail or both, it moves the head to the next/null if thereisnt one and sets the its previous to null then 
+		// the same with the tail using previous instead of next
 		if(Head == N)
 		{
 			Head = N->Next;
@@ -71,13 +79,15 @@ public:
 			}
 			
 		}
+		//in any case we made the node to be deleted pointers = to null then finaly delete it
 			N->Next = NULL;
 			N->Previous = NULL;
 			delete N;
 	}
 
-	///
+	///this delete funcion takes data instead of a pointer,  still  deletes the node which contains the data
 	void Delete(T data) {
+		// uses the find function below to get a pointer then just uses the destroy function above
 		Node<T>* FoundData = Find(data);
 		if (FoundData != NULL) {
 			Delete(FoundData);
@@ -87,7 +97,7 @@ public:
 		}
 	}
 
-	///
+	///loops through all the nodes and if it finds a  match to the data then it returns a pointer to it, if it doesnt find it it returns null
 	Node<T>* Find(T data)
 	{
 		Node<T>* temp = Head;
@@ -105,21 +115,26 @@ public:
 		return NULL;
 	}
 
-	//
+	//loops through all the nodes and displays their data
 	void Display() {
 		Node<T>* temp = Head;
-		while (temp != NULL)
-		{
-			cout << temp ->Getdata() << " ";
-			temp = temp->Next;
+		//if the whole list is emply dont print anyhting otherwise  print the list and an endl;
+		if (temp != NULL) {
+			cout << "The list contains: " << endl;
+			while (temp != NULL)
+			{
+				cout << temp->Getdata() << " ";
+				temp = temp->Next;
+			}
+			cout << endl;
 		}
-		cout << endl;
 	}
 
 
 	// a test to see if the functions work properly will return false if it failed
 	bool Diagnostics() {
 		List<int> testList;
+
 
 		/// checking the inset function 
 
@@ -167,6 +182,7 @@ public:
 				return false;
 		}
 
+
 		/// checking the Find function
 
 		// test to see if the find produces an error on somthing that isnt in the list
@@ -174,6 +190,7 @@ public:
 			cout << "Error in finding data not on the list" << endl;
 			return false;
 		}
+
 
 		/// checking the Display function
 
