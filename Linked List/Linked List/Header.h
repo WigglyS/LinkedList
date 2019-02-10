@@ -6,29 +6,30 @@
 
 using namespace std;
 
-///  The Node class is to store data of a generic type and acess to the next and previous in the list
-template<typename T>
-class Node
-{
-public:
-	Node* GetPrevious() { return Previous; }
-	void SetPrevious(Node* prev) { Previous  =  prev; }
-	Node* GetNext() { return Next; }
-	void SetNext(Node* next) { Next = next; }
-
-	T Getdata() { return data; };
-	void SetData(T d) { data = d; };
-private:
-	Node* Previous = nullptr;
-	Node* Next = nullptr;
-	T data;
-};
-
 //The list class is for holding acess to the head and tail as well as the funtions for adding deleting etc for the list
 template<typename T>
 class LinkedList
 {
 private:
+
+	///  The Node class is to store data of a generic type and acess to the next and previous in the list// nested so you have to go through the list to create nodes
+	template<typename T>
+	class Node
+	{
+	public:
+		Node* GetPrevious() { return Previous; }
+		void SetPrevious(Node* prev) { Previous = prev; }
+		Node* GetNext() { return Next; }
+		void SetNext(Node* next) { Next = next; }
+
+		T Getdata() { return data; };
+		void SetData(T d) { data = d; };
+	private:
+		Node* Previous = nullptr;
+		Node* Next = nullptr;
+		T data;
+	};
+
 	Node<T>* Head = nullptr;
 	Node<T>* Tail = nullptr;
 public:

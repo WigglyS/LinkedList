@@ -5,6 +5,7 @@ void main()
 {
 	LinkedList<int> linkedList;
 
+	
 	int Quit = 0;
 
 	do {
