@@ -11,12 +11,16 @@ template<typename T>
 class Node
 {
 public:
-	Node* Previous = nullptr;
-	Node* Next = nullptr;
+	Node* GetPrevious() { return Previous; }
+	void SetPrevious(Node* prev) { Previous  =  prev; }
+	Node* GetNext() { return Next; }
+	void SetNext(Node* next) { Next = next; }
 
 	T Getdata() { return data; };
 	void SetData(T d) { data = d; };
 private:
+	Node* Previous = nullptr;
+	Node* Next = nullptr;
 	T data;
 };
 
@@ -36,8 +40,8 @@ public:
 		{
 			Node<T>* newNode = new Node<T>;
 			newNode->SetData(data);
-			newNode->Previous = NULL;
-			newNode->Next = NULL;
+			newNode->SetPrevious(NULL);
+			newNode->SetNext(NULL);
 			Head = newNode;
 			Tail = newNode;
 
@@ -46,9 +50,9 @@ public:
 		{
 			Node<T>* newNode = new Node<T>;
 			newNode->SetData(data);
-			newNode->Previous = Tail;
-			Tail->Next = newNode;
-			newNode->Next = NULL;
+			newNode->SetPrevious(Tail);
+			Tail->SetNext(newNode);
+			newNode->SetNext(NULL);
 			Tail = newNode;
 		}
 
@@ -59,29 +63,29 @@ public:
 	{
 		//this first one is the general case, moves the pointers on both sides of the node to be deleted
 		if (Tail != N && Head != N) {
-			N->Previous->Next = N->Next;
-			N->Next->Previous = N->Previous;
+			N->GetPrevious()->SetNext(N->GetNext());
+			N->GetNext()->SetPrevious(N->GetPrevious());
 		}
 		//these next 2 handle it if it  either the head or tail or both, it moves the head to the next/null if thereisnt one and sets the its previous to null then 
 		// the same with the tail using previous instead of next
 		if(Head == N)
 		{
-			Head = N->Next;
-			if (N->Next != NULL) {
-				N->Next->Previous = NULL;
+			Head = N->GetNext();
+			if (N->GetNext() != NULL) {
+				N->GetNext()->SetPrevious(NULL);
 			}
 		}
 		if(Tail == N)
 		{
-			Tail= N->Previous;
-			if (N->Previous != NULL) {
-				N->Previous->Next = NULL;
+			Tail= N->GetPrevious();
+			if (N->GetPrevious() != NULL) {
+				N->GetPrevious()->SetNext(NULL);
 			}
 			
 		}
 		//in any case we made the node to be deleted pointers = to null then finaly delete it
-			N->Next = NULL;
-			N->Previous = NULL;
+			N->SetNext(NULL);
+			N->SetPrevious(NULL);
 			delete N;
 	}
 
@@ -109,7 +113,7 @@ public:
 			}
 			else
 			{
-				temp = temp->Next;
+				temp = temp->GetNext();
 			}
 		}
 		return NULL;
@@ -124,7 +128,7 @@ public:
 			while (temp != NULL)
 			{
 				cout << temp->Getdata() << " ";
-				temp = temp->Next;
+				temp = temp->GetNext();
 			}
 			cout << endl;
 		}
